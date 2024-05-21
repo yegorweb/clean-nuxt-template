@@ -1,9 +1,8 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>
-    
-  </div>
+  <v-container>
+  </v-container>
 </template>
 
 <style scoped></style>
