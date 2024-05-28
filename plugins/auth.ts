@@ -1,5 +1,4 @@
 import type { User } from "~/types/user"
-import parseToken from "~/utils/parseToken"
 import { appendResponseHeader, H3Event } from 'h3'
 
 export const fetchWithCookie = async (event: H3Event, url: string) => {
@@ -21,7 +20,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	const { refresh } =  await useAsyncData(() => fetchWithCookie(event!, useRuntimeConfig().public.apiBase + '/auth/refresh'))
 
 	const token = useCookie('token')
-	const user = computed<User | null>(() => token.value ? parseToken(token.value) : null)
+	const user = useCookie<User | null | undefined>('user')
 	const loggedIn = computed<boolean>(() => !!user.value?.email)
 
 	// Create a ref to know where to redirect the user when logged in
