@@ -2,10 +2,9 @@
 import { useRouter } from 'vue-router'
 import BackButton from '../components/BackButton.vue'
 import { useField, useForm } from 'vee-validate'
+import type { User } from '~/types/user';
 
-import _ from 'lodash'
-
-let router = useRouter()
+let auth = useAuth()
 
 const { meta, handleSubmit, handleReset, validate } = useForm<{
   name: string,
@@ -51,15 +50,12 @@ let show_password = ref(false)
 
 let loading = ref(false)
 
-const submit = handleSubmit(async values => {
+const submit = handleSubmit(async (values: Partial<User>) => {
   loading.value = true
   
-  // await auth.registration(Object.assign(values, {
-  //   roles: ['student', mentor.value ? 'mentor' : null],
-  // }))
-  // .then(() => { 
-  //   if (user.value) router.push(`/user/${user.value._id}`)
-  // })
+  await auth.registration(values)
+  
+  // if (auth.user.value) navigateTo(`/user/${auth.user.value._id}`)
 
   loading.value = false 
 })
@@ -135,12 +131,14 @@ const submit = handleSubmit(async values => {
         </v-form>
   
         <div 
-          @click="router.push('/login')" 
+          @click="navigateTo('/login')" 
           class="text-subtitle-1 w-100 cursor-pointer font-weight-semibold pa-1 mt-2"
         >
           вход
         </div>
       </v-card>
+      
+      {{ JSON.stringify($auth.user.value, null, 4) }}
     </v-col>
   </v-container>
 </template>

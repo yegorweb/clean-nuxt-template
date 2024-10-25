@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useField, useForm } from 'vee-validate';
 
-// document.title = 'Авторизация — Ищу наставника'
+useSeoMeta({
+  title: 'Авторизация'
+})
 
-let router = useRouter()
+let auth = useAuth()
 
 const { meta, handleSubmit, handleReset } = useForm({
   validationSchema: {
@@ -13,7 +15,7 @@ const { meta, handleSubmit, handleReset } = useForm({
     },
     email(value: string) {
       if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(value)) return true
-      return 'неправильный формат email'
+      return 'неправильный email'
     },
   },
 })
@@ -26,16 +28,17 @@ let loading = ref(false)
 
 const login = handleSubmit(async values => {
   loading.value = true
-  // await auth.login(values.email, values.password)
+  await auth.login(values.email, values.password)
   loading.value = false
   
-  router.push('/')
+  if (auth.user.value)
+    navigateTo('/')
 })
 </script>
 
 <template>
-  <v-container class="align-start">
-    <BackButton></BackButton>
+  <v-container>
+    <BackButton />
 
     <v-col cols="12" xs="12" md="6" lg="4" class="mt-4 ma-auto">
       <v-card 
@@ -71,16 +74,11 @@ const login = handleSubmit(async values => {
         </v-form>
   
         <div 
-          @click="router.push('/registration')" 
+          @click="navigateTo('/registration')" 
           :loading="loading"
           class="text-body-2 w-100 cursor-pointer font-weight-semibold pa-1 mt-4"
         >
           регистрация
-        </div>
-        <div
-          class="text-body-2 w-100 cursor-pointer font-weight-semibold pa-1"
-        >
-          восстановить пароль
         </div>
       </v-card>
     </v-col>
