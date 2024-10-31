@@ -71,8 +71,7 @@ const submit = handleSubmit(async (values: Partial<User>) => {
     >
       <v-card 
         class="d-flex flex-column 
-        justify-center align-center 
-        text-center w-100 pl-6 pr-6 
+        align-center w-100 pl-6 pr-6 
         pt-4 pb-6 rounded-lg"
       >
         <div 
@@ -82,7 +81,7 @@ const submit = handleSubmit(async (values: Partial<User>) => {
         </div>
   
         <v-form
-          class="mt-6 w-100"
+          class="mt-6 w-100 d-flex flex-column align-center"
           @submit="submit"
         >
           <v-text-field 
@@ -134,7 +133,7 @@ const submit = handleSubmit(async (values: Partial<User>) => {
   
         <div 
           @click="navigateTo('/login')" 
-          class="text-subtitle-1 w-100 cursor-pointer font-weight-semibold pa-1 mt-2"
+          class="text-subtitle-1 cursor-pointer font-weight-semibold pa-1 mt-2"
         >
           вход
         </div>
