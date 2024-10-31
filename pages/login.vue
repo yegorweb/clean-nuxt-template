@@ -5,7 +5,14 @@ useSeoMeta({
   title: 'Авторизация'
 })
 
+let route = useRoute()
+
 let auth = useAuth()
+let redirectTo = useState('authRedirect')
+
+if (route.query.redirect) {
+  redirectTo.value = route.query.redirect
+}
 
 const { meta, handleSubmit, handleReset } = useForm({
   validationSchema: {
