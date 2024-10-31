@@ -55,6 +55,7 @@ const login = handleSubmit(async values => {
             :error-messages="email.errorMessage.value"
             variant="outlined"
             density="compact"
+            autocomplete="username"
             class="w-100"
           />          
 
@@ -68,6 +69,7 @@ const login = handleSubmit(async values => {
             variant="outlined"
             density="compact"
             class="w-100"
+            autocomplete="current-password"
           />
 
           <v-btn type="submit" :disabled="!meta.valid" color="accent" class="mt-4">Войти</v-btn>
