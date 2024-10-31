@@ -24,7 +24,10 @@ export default defineNuxtConfig({
     ['@nuxtjs/google-fonts', {
       families: {
         Montserrat: [100, 200, 300, 400, 500, 600, 700, 800, 900]
-      }
+      },
+      preload: true,
+      download: true,
+      preconnect: true
     }],
   ],
   vite: {
