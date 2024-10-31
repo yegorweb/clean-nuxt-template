@@ -6,7 +6,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 	const vuetify = createVuetify({
 		defaults: {
 			VBtn: {
-				style: 'text-transform: none; letter-spacing: normal',
+				class: 'text-body-2'
 			},
 			global: {
 				ripple: false,
