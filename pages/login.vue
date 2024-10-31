@@ -76,7 +76,7 @@ const login = handleSubmit(async values => {
             :class="{'w-100': true, 'mt-2': !!email.errorMessage.value}"
           />
 
-          <v-btn type="submit" :disabled="!meta.valid" color="accent" class="mt-4">Войти</v-btn>
+          <v-btn type="submit" :loading="loading" :disabled="!meta.valid" color="accent" class="mt-4">Войти</v-btn>
         </v-form>
   
         <div 
