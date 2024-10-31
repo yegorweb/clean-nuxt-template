@@ -1,6 +1,3 @@
-import type { CookieRef } from "#app"
-import type { User } from "./types/user"
-
 declare module 'nuxt/schema' {
 	interface PublicRuntimeConfig {
 		siteUrl: string
@@ -20,7 +17,7 @@ declare module '#app' {
 	}
 }
   
-  declare module 'vue' {
+declare module 'vue' {
 	interface ComponentCustomProperties {
 	  $auth: {
 			refresh: () => Promise<void>,
