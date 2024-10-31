@@ -42,7 +42,7 @@ const login = handleSubmit(async values => {
 
     <v-col cols="12" xs="12" md="6" lg="4" class="mt-4 ma-auto">
       <v-card 
-        class="d-flex flex-column justify-center align-center text-center rounded-lg w-100 pl-6 pr-6 pt-4 pb-6"
+        class="d-flex flex-column justify-center align-center rounded-lg w-100 pl-6 pr-6 pt-4 pb-6"
       >
         <div class="text-h6 font-weight-bold">Вход</div>
   
@@ -78,7 +78,7 @@ const login = handleSubmit(async values => {
         <div 
           @click="navigateTo('/registration')" 
           :loading="loading"
-          class="text-body-2 w-100 cursor-pointer font-weight-semibold pa-1 mt-4"
+          class="text-body-2 cursor-pointer font-weight-semibold pa-1 mt-4"
         >
           регистрация
         </div>
