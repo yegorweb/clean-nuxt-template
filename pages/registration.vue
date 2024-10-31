@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import BackButton from '../components/BackButton.vue'
 import { useField, useForm } from 'vee-validate'
-import type { User } from '~/types/user';
 
 let auth = useAuth()
 
