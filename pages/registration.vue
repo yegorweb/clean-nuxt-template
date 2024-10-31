@@ -104,6 +104,7 @@ const submit = handleSubmit(async (values: Partial<User>) => {
             :error-messages="email.errors.value"
             variant="outlined"
             density="compact"
+            autocomplete="username"
             class="w-100 mt-1"
           />          
 
@@ -116,6 +117,7 @@ const submit = handleSubmit(async (values: Partial<User>) => {
             :error-messages="password.errorMessage.value"
             variant="outlined"
             density="compact"
+            autocomplete="new-password"
             class="w-100 mt-1"
           />
 
