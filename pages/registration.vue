@@ -49,11 +49,7 @@ let loading = ref(false)
 
 const submit = handleSubmit(async (values: Partial<User>) => {
   loading.value = true
-  
   await auth.registration(values)
-  
-  // if (auth.user.value) navigateTo(`/user/${auth.user.value._id}`)
-
   loading.value = false 
 })
 </script>
@@ -71,9 +67,7 @@ const submit = handleSubmit(async (values: Partial<User>) => {
         align-center w-100 pl-6 pr-6 
         pt-4 pb-6 rounded-lg"
       >
-        <div 
-          class="text-h6 font-weight-bold"
-        >
+        <div class="text-h6 font-weight-bold">
           Регистрация
         </div>
   
@@ -135,8 +129,6 @@ const submit = handleSubmit(async (values: Partial<User>) => {
           вход
         </div>
       </v-card>
-      
-      {{ JSON.stringify($auth.user.value, null, 4) }}
     </v-col>
   </v-container>
 </template>
