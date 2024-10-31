@@ -11,10 +11,7 @@ declare module 'nuxt/schema' {
 declare module '#app' {
 	interface NuxtApp {
 	  $auth: {
-			user: globalThis.Ref<User | null | undefined>,
-			loggedIn: globalThis.ComputedRef<boolean>,
 			refresh: () => Promise<void>,
-			redirectTo: globalThis.Ref<unknown>,
 			logout: () => Promise<void>,
 			login: (email: string, password: string) => Promise<void>,
 			registration: (form: object) => Promise<void>,
@@ -26,10 +23,7 @@ declare module '#app' {
   declare module 'vue' {
 	interface ComponentCustomProperties {
 	  $auth: {
-			user: globalThis.Ref<User | null | undefined>,
-			loggedIn: globalThis.ComputedRef<boolean>,
 			refresh: () => Promise<void>,
-			redirectTo: globalThis.Ref<unknown>,
 			logout: () => Promise<void>,
 			login: (email: string, password: string) => Promise<void>,
 			registration: (form: object) => Promise<void>,
