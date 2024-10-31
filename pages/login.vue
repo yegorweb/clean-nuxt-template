@@ -37,9 +37,6 @@ const login = handleSubmit(async values => {
   loading.value = true
   await auth.login(values.email, values.password)
   loading.value = false
-  
-  if (auth.user.value)
-    navigateTo('/')
 })
 </script>
 
