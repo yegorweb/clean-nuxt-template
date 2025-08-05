@@ -17,6 +17,20 @@ export default defineNuxtConfig({
     }
   },
 
+  site: { 
+    url: 'http://site.com', 
+    name: 'Заголовок сайта' 
+  }, 
+
+  robots: {
+    groups: [
+      { 
+        userAgent: '*', 
+        allow: '/'
+      },
+    ]
+  },
+
   devServer: {
     port: Number(process.env.NUXT_DEV_PORT || 3000)
   },
