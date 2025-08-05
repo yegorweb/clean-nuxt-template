@@ -5,6 +5,17 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/main.scss'],
 
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'ru'
+      },
+      link: [
+        { rel: 'icon', href: '/favicon.ico' },
+      ]
+    }
+  },
+
   devServer: {
     port: Number(process.env.NUXT_DEV_PORT || 3000)
   },
