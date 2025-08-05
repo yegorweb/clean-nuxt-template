@@ -15,6 +15,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@nuxtjs/robots": "^5.4.0",
     "sass": "^1.89.2"
   }
 }
