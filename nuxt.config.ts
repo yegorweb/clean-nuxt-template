@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 
   site: { 
     url: 'http://site.com', 
-    name: 'Заголовок сайта' 
+    name: 'Сайт' 
   }, 
 
   robots: {
