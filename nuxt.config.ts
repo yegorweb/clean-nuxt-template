@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/robots', '@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/robots', '@nuxtjs/sitemap', 'vuetify-nuxt-module'],
 
   css: ['~/assets/styles/main.scss'],
 
