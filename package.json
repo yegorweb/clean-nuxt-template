@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@mdi/js": "^7.4.47",
     "nuxt": "^4.0.1",
     "vee-validate": "^4.15.1",
     "vue": "^3.5.18",
