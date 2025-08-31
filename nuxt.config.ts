@@ -34,4 +34,26 @@ export default defineNuxtConfig({
   devServer: {
     port: Number(import.meta.env.NUXT_DEV_PORT || 3000)
   },
+
+  imports: {
+    imports: [
+      {
+        from: 'ofetch',
+        name: 'FetchError',
+        declarationType: 'class',
+        type: true
+      },
+      {
+        from: 'ofetch',
+        name: 'FetchError',
+        declarationType: 'class',
+      },
+    ],
+    presets: [
+      {
+        from: 'vee-validate',
+        imports: ['useForm', 'useField'],
+      },
+    ],
+  }
 })
