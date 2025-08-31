@@ -32,6 +32,6 @@ export default defineNuxtConfig({
   },
 
   devServer: {
-    port: Number(process.env.NUXT_DEV_PORT || 3000)
+    port: Number(import.meta.env.NUXT_DEV_PORT || 3000)
   },
 })
