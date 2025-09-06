@@ -31,6 +31,14 @@ export default defineNuxtConfig({
     ]
   },
 
+  features: {
+    inlineStyles: false
+  },
+
+  vuetify: {
+    vuetifyOptions: './vuetify.config.ts',
+  },
+
   devServer: {
     port: Number(import.meta.env.NUXT_DEV_PORT || 3000)
   },
