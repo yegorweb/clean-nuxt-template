@@ -19,6 +19,7 @@
   "devDependencies": {
     "@nuxtjs/robots": "^5.4.0",
     "@nuxtjs/sitemap": "^7.4.3",
+    "nuxt-svgo": "^4.2.6",
     "sass": "^1.89.2",
     "vuetify-nuxt-module": "^0.18.7"
   }
