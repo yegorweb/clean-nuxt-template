@@ -39,6 +39,10 @@ export default defineNuxtConfig({
     vuetifyOptions: './vuetify.config.ts',
   },
 
+  svgo: {
+    defaultImport: 'skipsvgo',
+  },
+
   devServer: {
     port: Number(import.meta.env.NUXT_DEV_PORT || 3000)
   },
