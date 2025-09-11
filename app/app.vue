@@ -2,7 +2,14 @@
 useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} – Сайт` : 'Сайт'
-  }
+  },
+  link: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: "/logo.svg",
+    },
+  ],
 })
 
 useSeoMeta({
