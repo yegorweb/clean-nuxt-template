@@ -17,11 +17,6 @@ export default defineNuxtConfig({
     }
   },
 
-  site: { 
-    url: 'http://site.com', 
-    name: 'Сайт' 
-  }, 
-
   robots: {
     groups: [
       { 
