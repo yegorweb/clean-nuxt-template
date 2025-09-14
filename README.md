@@ -27,7 +27,7 @@ npm run dev
 Auth store доступен с composable `useAuth`
 ```vue
 <script setup lang="ts">
-auth = useAuth()
+const auth = useAuth()
 </script>
 ```
 
