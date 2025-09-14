@@ -1,4 +1,6 @@
 <script setup lang="ts">
+let auth = useAuth()
+
 
 </script>
 
