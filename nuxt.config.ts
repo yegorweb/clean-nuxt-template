@@ -6,6 +6,13 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/main.scss'],
 
+  runtimeConfig: {
+    public: {
+      apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
+      siteUrl: '', // can be overridden by NUXT_PUBLIC_SITE_URL environment variable
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: {
