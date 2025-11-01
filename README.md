@@ -95,9 +95,9 @@ const { data:result, refresh } = await useAsyncData(() => useApiFetchWithCookies
 
 ## License
 
-Код шаблона, доступный по адресу  
+Все файлы шаблона (репозитория), доступного по адресу  
 <https://github.com/yegorweb/clean-nuxt-template>,  
-распространяется по лицензии **MIT** (см. [LICENSE](https://github.com/yegorweb/clean-nuxt-template/blob/master/LICENSE)).
+распространяются по лицензии **MIT** в соответствии с [файлом LICENSE](https://github.com/yegorweb/clean-nuxt-template/blob/master/LICENSE), хранящимся в корне этого репозитория.
 
 Вы можете использовать этот шаблон как основу для своих проектов.  
 Лицензия будущего проекта определяется **вами**: вы вправе
