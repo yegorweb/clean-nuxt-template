@@ -80,6 +80,17 @@ const login = handleSubmit(async values => {
             :class="['w-100', {'mt-3': !!email.errorMessage.value}]"
           />
 
+          <div :style="{ marginTop: !!password.errorMessage.value&&pressed ? '4px' : '-14px' }" class="w-100">
+            <v-btn 
+              @click="navigateTo('/auth/forgot-password')"
+              density="compact"
+              variant="text" 
+              color="blue" 
+              class="reset"
+              slim
+            >Не помню пароль</v-btn>
+          </div>
+
           <v-btn 
             type="submit" 
             :loading="loading" 
