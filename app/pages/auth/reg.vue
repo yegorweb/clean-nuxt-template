@@ -25,7 +25,7 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
   validationSchema: {
     fullname(value: string) {
-      if (!value) return 'введите фамилию, имя'
+      if (!value) return 'введите имя, фамилию'
       if (value.length < 4) return 'слишком короткое имя и фамилия'
       if (value.length > 22) return 'слишком длинное имя и фамилия'
 
@@ -53,7 +53,7 @@ let email = useField<string>('email')
 let password = useField<string>('password')
 
 let show_password = ref(false)
-
+let pressed = ref(false)
 let errorMessage = ref()
 let loading = ref(false)
 
@@ -90,14 +90,14 @@ const submit = handleSubmit(async values => {
   
         <v-form
           class="mt-6 w-100 d-flex flex-column align-center"
-          @submit="submit"
+          @submit.prevent="pressed = true; submit()"
         >
           <v-text-field 
             label="Имя Фамилия"
             type="name"
             placeholder="Иван Иванов"
             v-model="fullname.value.value"
-            :error-messages="fullname.errors.value"
+            :error-messages="pressed?fullname.errors.value:null"
             variant="outlined"
             density="compact"
             class="w-100"
@@ -108,11 +108,11 @@ const submit = handleSubmit(async values => {
             type="email"
             placeholder="vasya@ya.ru"
             v-model="email.value.value"
-            :error-messages="email.errors.value"
+            :error-messages="pressed?email.errors.value:null"
             variant="outlined"
             density="compact"
             autocomplete="username"
-            :class="{'w-100': true, 'mt-1': !fullname.errorMessage.value, 'mt-3': fullname.errorMessage.value}"
+            :class="['w-100', !!fullname.errorMessage.value&&pressed ? 'mt-3' : 'mt-1']"
           />          
 
           <v-text-field 
@@ -121,11 +121,11 @@ const submit = handleSubmit(async values => {
             :append-inner-icon="show_password ? mdiEye : mdiEyeOff"
             @click:append-inner="show_password = !show_password"
             :type="show_password ? 'text' : 'password'"
-            :error-messages="password.errorMessage.value"
+            :error-messages="pressed?password.errorMessage.value:null"
             variant="outlined"
             density="compact"
             autocomplete="new-password"
-            :class="{'w-100': true, 'mt-1': !email.errorMessage.value, 'mt-3': email.errorMessage.value}"
+            :class="['w-100', !!email.errorMessage.value&&pressed ? 'mt-3' : 'mt-1']"
           />
 
           <v-btn 
@@ -133,7 +133,7 @@ const submit = handleSubmit(async values => {
             :loading="loading"
             color="accent"
             style="font-size: 15px !important;"
-            :class="{'bg-primary': true, 'mt-4': password.errorMessage.value, 'mt-2': !password.errorMessage.value}"
+            :class="['bg-primary', !!password.errorMessage.value&&pressed ? 'mt-4' : 'mt-2']"
           >
             Отправить
           </v-btn>

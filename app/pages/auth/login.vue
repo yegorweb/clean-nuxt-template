@@ -28,8 +28,9 @@ const { handleSubmit } = useForm({
 
 const email = useField('email')
 const password = useField('password')
-let show_password = ref(false)
 
+let pressed = ref(false)
+let show_password = ref(false)
 let errorMessage = ref()
 let loading = ref(false)
 
@@ -54,13 +55,13 @@ const login = handleSubmit(async values => {
       >
         <div class="text-h6 font-weight-bold">Вход</div>
   
-        <v-form @submit.prevent="login" class="d-flex mt-3 flex-column align-center justify-center w-100">
+        <v-form @submit.prevent="pressed = true; login()" class="d-flex mt-3 flex-column align-center justify-center w-100">
           <v-text-field 
             label="Email"
             type="email"
             placeholder="vasya@ya.ru"
             v-model="email.value.value"
-            :error-messages="email.errorMessage.value"
+            :error-messages="pressed?email.errorMessage.value:null"
             variant="outlined"
             density="compact"
             autocomplete="username"
@@ -73,11 +74,11 @@ const login = handleSubmit(async values => {
             :append-inner-icon="show_password ? mdiEye : mdiEyeOff"
             @click:append-inner="show_password = !show_password"
             :type="show_password ? 'text' : 'password'"
-            :error-messages="password.errorMessage.value"
+            :error-messages="pressed?password.errorMessage.value:null"
             variant="outlined"
             density="compact"
             autocomplete="current-password"
-            :class="['w-100', {'mt-3': !!email.errorMessage.value}]"
+            :class="['w-100', {'mt-3': !!email.errorMessage.value&&pressed}]"
           />
 
           <div :style="{ marginTop: !!password.errorMessage.value&&pressed ? '4px' : '-14px' }" class="w-100">
