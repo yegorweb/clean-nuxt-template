@@ -20,8 +20,8 @@ const { handleSubmit } = useForm({
       return 'неправильный email'
     },
     password(value: string) {
-      if (value?.length >= 8) return true
-      return 'нужно 8 символов'
+      if (value?.length >= 4) return true
+      return 'нужно 4 символа'
     },
   },
 })
