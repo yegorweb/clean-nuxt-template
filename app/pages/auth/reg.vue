@@ -84,7 +84,7 @@ const submit = handleSubmit(async values => {
           </div>
     
           <v-form
-            class="mt-6 w-100 d-flex flex-column align-center"
+            class="mt-3 w-100 d-flex flex-column align-center"
             @submit.prevent="pressed = true; submit()"
           >
             <v-text-field 
@@ -111,7 +111,7 @@ const submit = handleSubmit(async values => {
               variant="outlined"
               density="compact"
               autocomplete="username"
-              :class="['w-100', !!fullname.errorMessage.value&&pressed ? 'mt-3' : 'mt-1']"
+              :class="['w-100', {'mt-3':!!fullname.errorMessage.value&&pressed}]"
             />          
   
             <v-text-field 
@@ -127,7 +127,7 @@ const submit = handleSubmit(async values => {
               name="password"
               autocomplete="new-password"
               aria-describedby="password-constraints"
-              :class="['w-100', !!email.errorMessage.value&&pressed ? 'mt-3' : 'mt-1']"
+              :class="['w-100', {'mt-3':!!email.errorMessage.value&&pressed}]"
             />
   
             <v-btn 
@@ -135,7 +135,7 @@ const submit = handleSubmit(async values => {
               :loading="loading"
               color="accent"
               style="font-size: 15px !important;"
-              :class="['bg-primary', !!password.errorMessage.value&&pressed ? 'mt-4' : 'mt-2']"
+              :class="['bg-primary', !!password.errorMessage.value&&pressed ? 'mt-3' : 'mt-2']"
             >
               Отправить
             </v-btn>
