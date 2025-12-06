@@ -52,6 +52,8 @@ const submit = handleSubmit(async values => {
           <v-text-field 
             label="Email"
             type="email"
+            id="email" 
+            name="email"
             placeholder="vasya@ya.ru"
             v-model="email.value.value"
             :error-messages="pressed?email.errorMessage.value:null"

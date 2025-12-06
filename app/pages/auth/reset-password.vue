@@ -61,7 +61,10 @@ const submit = handleSubmit(async values => {
             :error-messages="pressed?password.errorMessage.value:null"
             variant="outlined"
             density="compact"
+            id="password" 
+            name="password"
             autocomplete="new-password"
+            aria-describedby="password-constraints"
             class="w-100"
           />
         </v-col>
