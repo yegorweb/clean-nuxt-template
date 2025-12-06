@@ -1,9 +1,10 @@
 # Описание
 Это приложение на Nuxt
 
-После копирования шаблона <https://github.com/yegorweb/clean-nuxt-template> рекомендуется обновить Nuxt и его зависимости с помощью этой команды:
+После копирования шаблона <https://github.com/yegorweb/clean-nuxt-template> рекомендуется обновить Nuxt и его зависимости с помощью этих команд:
 ```shell
 npx nuxt upgrade --dedupe
+npm i baseline-browser-mapping@latest -D
 ```
 
 # Перед запуском
