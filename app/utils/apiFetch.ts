@@ -7,6 +7,9 @@ export const useApiFetchRaw = () => $fetch.create({
   onRequest({ options }) {
     let auth = useAuth()
     if (auth.accessToken.value) {
+      if (!(options.headers instanceof Headers)) {
+        options.headers = new Headers(options.headers)
+      }
       options.headers.set('Authorization', `Bearer ${auth.accessToken.value}`)
     }
   },
