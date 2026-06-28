@@ -28,8 +28,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       return { ok: res.ok }
 		} catch (err) {
 			if ((err as FetchError).status === 401) {
-				user.value = null
-				accessToken.value = null
 				clearNuxtState(['user', 'accessToken'])
 			}
       return { 
@@ -118,8 +116,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 			})
 			
 			if (res.ok) {
-				user.value = null
-				accessToken.value = null
+				await navigateTo('/')
 				clearNuxtState(['user', 'accessToken', 'refreshed'])
 			}
 			return { ok: res.ok }
