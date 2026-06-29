@@ -1,10 +1,10 @@
 <script setup lang="ts">
-let props = defineProps<{ message: string | undefined }>()
-let errorMessage = props.message ? `: ${props.message}` : ''
+let model = defineModel<string | Extract<StoreResponse<any>, { ok: false }>>()
+let message = model.value ? typeof model.value === 'string' ? model.value : generateErrorMessage(model.value) : 'Ошибка'
 </script>
 
 <template>
-  <div class="error">Ошибка{{ errorMessage }}</div>
+  <div class="error">{{ message }}</div>
 </template>
 
 <style lang="postcss" scoped>

@@ -33,15 +33,15 @@ const password = useField('password')
 
 let pressed = ref(false)
 let show_password = ref(false)
-let errorMessage = ref()
+let error = ref()
 let loading = ref(false)
 
 const login = handleSubmit(async values => {
-  errorMessage.value = null
+  error.value = null
   loading.value = true
   let res = await auth.login(values.email, values.password)
   if (res.ok) await navigateTo(redirectTo, { replace: true })
-  else errorMessage.value = res.message
+  else error.value = res
   loading.value = false
 })
 </script>
@@ -108,7 +108,7 @@ const login = handleSubmit(async values => {
               class="bg-primary mt-3"
             >Войти</v-btn>
   
-            <ErrorMessage v-if="errorMessage" :message="errorMessage" class="mt-2" />
+            <ErrorMessage v-if="error" v-model="error" class="mt-2" />
           </v-form>
     
           <v-btn

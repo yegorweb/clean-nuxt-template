@@ -30,15 +30,15 @@ let token = useRoute().query.token as string
 
 let pressed = ref(true)
 let showPassword = ref(false)
-let errorMessage = ref()
+let error = ref()
 let loading = ref(false)
 
 const submit = handleSubmit(async values => {
-  errorMessage.value = null
+  error.value = null
   loading.value = true
   let res = await auth.resetPassword(values.password, token, user_id)
   if (res.ok) await navigateTo('/auth/login', { replace: true })
-  else errorMessage.value = res.message
+  else error.value = res
   loading.value = false
 })
 </script>
@@ -78,8 +78,8 @@ const submit = handleSubmit(async values => {
           >Отправить</v-btn>
         </v-col>
 
-        <v-col v-if="errorMessage" class="pa-0" cols="12">
-          <ErrorMessage :message="errorMessage" />
+        <v-col v-if="error" class="pa-0" cols="12">
+          <ErrorMessage v-model="error" />
         </v-col>
       </v-row>
     </v-form>

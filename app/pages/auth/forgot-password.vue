@@ -24,16 +24,16 @@ const { handleSubmit } = useForm({
 let email = useField<string>('email')
 
 let pressed = ref(false)
-let errorMessage = ref()
+let error = ref()
 let loading = ref(false)
 let success = ref(false)
 
 const submit = handleSubmit(async values => {
-  errorMessage.value = null
+  error.value = null
   loading.value = true
   let res = await auth.sendResetLink(values.email)
   if (res.ok) success.value = true
-  else errorMessage.value = res.message
+  else error.value = res
   loading.value = false
 })
 </script>
@@ -73,8 +73,8 @@ const submit = handleSubmit(async values => {
           >Отправить</v-btn>
         </v-col>
 
-       <v-col v-if="errorMessage" class="pa-0" cols="12">
-          <ErrorMessage :message="errorMessage" />
+       <v-col v-if="error" class="pa-0" cols="12">
+          <ErrorMessage v-model="error" />
         </v-col>
       </v-row>
     </v-form>
