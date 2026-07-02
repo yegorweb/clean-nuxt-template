@@ -108,7 +108,7 @@ const login = handleSubmit(async values => {
               class="bg-primary mt-3"
             >Войти</v-btn>
   
-            <ErrorMessage v-if="error" v-model="error" class="mt-2" />
+            <ErrorMessage v-if="error" v-model="error" class="mt-2 text-center" />
           </v-form>
     
           <v-btn
