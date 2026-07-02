@@ -18,10 +18,12 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
 	let config = useRuntimeConfig()
 	let event = useRequestEvent()
-  let tokenCookie = useCookie('refreshToken')
-
+	
 	let user = useState<User | null | undefined>('user')
+	let loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
 	let accessToken = useState<string | null| undefined>('accessToken')
+  let tokenCookie = useCookie('refreshToken')
+	let refreshed = useState<true | undefined>('refreshed')
 
 	async function refresh() {
 		try {
@@ -36,9 +38,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 		} catch {}
 	}
 	await refresh()
-  useState('refreshed').value = true
-
-	let loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
+  refreshed.value = true
 
 	/**
 		* Add global route middleware to protect pages using:
