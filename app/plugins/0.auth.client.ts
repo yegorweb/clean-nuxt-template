@@ -7,42 +7,33 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const config = useRuntimeConfig()
 
 	let user = useState<User | null | undefined>('user')
+	let loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
 	let accessToken = useState<string | null | undefined>('accessToken')
 	let refreshed = useState<true | undefined>('refreshed')
 
 	async function refresh(): Promise<StoreResponse<null>> {
-		try {
-			let res = await $fetch.raw<{ 
-        user: User, 
-        accessToken: string 
-      } | null | undefined>(
-        '/auth/refresh', { 
-					baseURL: config.public.apiBase, 
-					method: 'POST', 
-					credentials: 'include' 
-			})
-			if (res._data) {
-				user.value = res._data.user
-				accessToken.value = res._data.accessToken
-			}
-      return { ok: res.ok }
-		} catch (err) {
-			if ((err as FetchError).status === 401) {
-				clearNuxtState(['user', 'accessToken'])
-			}
-      return { 
-        ok: false, 
-        status: (err as FetchError).status,
-        message: (err as FetchError).response?._data?.message
-      }
-		}
+		let response = { ok: false } as StoreResponse<null>
+
+		await $fetch<{ user: User, accessToken: string }>('/auth/refresh', { 
+			baseURL: config.public.apiBase, 
+			method: 'POST', 
+			credentials: 'include' 
+		}).then(data => {
+			user.value = data.user
+			accessToken.value = data.accessToken
+			response = { ok: true }
+		}).catch((err: FetchError) => {
+			if (err.status === 401) clearNuxtState(['user', 'accessToken'])
+      response = { ok: false, status: err.status, message: err.response?._data?.message }
+		})
+
+		return response
 	}
+
 	if (!refreshed.value) {
 		await refresh()
 		refreshed.value = true
 	}
-
-	let loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
 
 	/**
 		* Add global route middleware to protect pages using:
@@ -64,84 +55,66 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	)
 
 	async function login(email: string, password: string): Promise<StoreResponse<null>> {
-		try {
-			let res = await $fetch.raw<{ user: User, accessToken: string } | null | undefined>('/auth/login', { 
-				baseURL: config.public.apiBase, 
-				credentials: 'include',
-				method: 'POST',
-				body: { email, password }
-			})
-	
-			if (res.ok && res._data) {
-				user.value = res._data.user
-				accessToken.value = res._data.accessToken
-        return { ok: true }
-			}
-      return { ok: false }
-		} catch (err) {
-      return err instanceof FetchError ? 
-        { 
-          ok: false, 
-          status: err.status,
-          message: err.response?._data?.message
-        } : { ok: false }
-		}
+		let response = { ok: false } as StoreResponse<null>
+
+		await $fetch<{ user: User, accessToken: string }>('/auth/login', { 
+			baseURL: config.public.apiBase, 
+			credentials: 'include',
+			method: 'POST',
+			body: { email, password }
+		}).then(data => {
+			user.value = data.user
+			accessToken.value = data.accessToken
+			response = { ok: true }
+		}).catch((err: FetchError) => {
+      response = { ok: false, status: err.status, message: err.response?._data?.message }
+		})
+
+		return response
 	}
 
 	async function registerUser(form: object): Promise<StoreResponse<null>> {
-		try {
-			let res = await $fetch.raw<{ user: User, accessToken: string } | null | undefined>('/auth/register-user', { 
-				baseURL: config.public.apiBase, 
-				credentials: 'include',
-				method: 'POST',
-				body: form
-			})
-			
-			return { ok: res.ok }
-		} catch (err) {
-			return { 
-				ok: false, 
-				status: (err as FetchError).status,
-				message: (err as FetchError).response?._data?.message
-			}
-		}
+		let response = { ok: false } as StoreResponse<null>
+
+		await $fetch<{ user: User, accessToken: string }>('/auth/register-user', { 
+			baseURL: config.public.apiBase, 
+			credentials: 'include',
+			method: 'POST',
+			body: form
+		}).then(data => {
+			response = { ok: true }
+		}).catch((err: FetchError) => {
+      response = { ok: false, status: err.status, message: err.response?._data?.message }
+		})
+
+		return response
 	}
 
 	async function logout(): Promise<StoreResponse<null>> {
-		try {
-			let res = await $fetch.raw('/auth/logout', { 
-				baseURL: config.public.apiBase, 
-				credentials: 'include',
-				method: 'POST'
-			})
-			
-			if (res.ok) {
-				await navigateTo('/')
-				clearNuxtState(['user', 'accessToken', 'refreshed'])
-			}
-			return { ok: res.ok }
-		} catch (err) {
-			return err instanceof FetchError ? 
-        { 
-          ok: false, 
-          status: err.status,
-          message: err.response?._data?.message
-        } : { ok: false }
-		}
+		let response = { ok: false } as StoreResponse<null>
+
+		await $fetch('/auth/logout', { 
+			baseURL: config.public.apiBase, 
+			credentials: 'include',
+			method: 'POST'
+		}).then(async data => {
+			await navigateTo('/')
+			clearNuxtState(['user', 'accessToken', 'refreshed'])
+		}).catch((err: FetchError) => {
+      response = { ok: false, status: err.status, message: err.response?._data?.message }
+		})
+
+		return response
 	}
 
-	let $apiFetch = useApiFetchRaw()
-
 	async function sendResetLink(email: string): Promise<StoreResponse<null>> {
+		let $apiFetch = useApiFetchRaw()
 		let response: StoreResponse<null> = { ok: false }
 		
-		await $apiFetch<string>(
-			'/auth/send-reset-password-link', 
-			{ 
-				method: 'POST',
-				body: { email },
-			}
-		).then(() => {
+		await $apiFetch<string>('/auth/send-reset-password-link', { 
+			method: 'POST',
+			body: { email },
+		}).then(() => {
       response = { ok: true }
     }).catch((err: FetchError) => {
       response = { ok: false, status: err.status, message: err.response?._data?.message }
@@ -151,19 +124,17 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	}
 
 	async function resetPassword(password: string, token: string, user_id: string): Promise<StoreResponse<null>> {
+		let $apiFetch = useApiFetchRaw()
 		let response: StoreResponse<null> = { ok: false }
 		
-		await $apiFetch<string>(
-			'/auth/reset-password', 
-			{ 
-				method: 'POST',
-				body: {
-					password,
-					token,
-					user_id
-				}
+		await $apiFetch<string>('/auth/reset-password', { 
+			method: 'POST',
+			body: {
+				password,
+				token,
+				user_id
 			}
-		).then(() => {
+		}).then(() => {
       response = { ok: true }
     }).catch((err: FetchError) => {
       response = { ok: false, status: err.status, message: err.response?._data?.message }
