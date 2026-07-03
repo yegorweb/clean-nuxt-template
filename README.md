@@ -64,7 +64,7 @@ definePageMeta({
 ```ts
 // path: ~/composables/useUser.ts
 export const useUser = () => {
-    let $apiFetch = useApiFetchRaw()
+  let $apiFetch = useApiFetchRaw()
 
   async function getMyName(): Promise<StoreResponse<string>> {
     let response: StoreResponse<string> = { ok: false }
@@ -92,7 +92,9 @@ export const useUser = () => {
 <script setup lang="ts">
 const event = useRequestEvent()
 
-const { data:result, refresh } = await useAsyncData(() => useApiFetchWithCookies(event!, '/cookie-route'))
+const { data:result, refresh } = await useAsyncData(
+  () => useApiFetchWithCookies(event!, '/cookie-route')
+)
 </script>
 ```
 
