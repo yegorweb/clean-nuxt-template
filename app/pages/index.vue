@@ -1,5 +1,5 @@
 <script setup lang="ts">
-let auth = useAuth()
+const auth = useAuth()
 
 
 </script>

@@ -6,10 +6,10 @@ useSeoMeta({
   ogTitle: 'Вход',
 })
 
-let route = useRoute()
+const route = useRoute()
 
-let auth = useAuth()
-let redirectTo = Array.isArray(route.query.redirect) ? 
+const auth = useAuth()
+const redirectTo = Array.isArray(route.query.redirect) ? 
   (route.query.redirect[0] ? decodeURIComponent(route.query.redirect[0]) : '/') : 
   (route.query.redirect ? decodeURIComponent(route.query.redirect) : '/')
 
@@ -31,15 +31,15 @@ const { handleSubmit } = useForm({
 const email = useField('email')
 const password = useField('password')
 
-let pressed = ref(false)
-let show_password = ref(false)
-let error = ref()
-let loading = ref(false)
+const pressed = ref(false)
+const show_password = ref(false)
+const error = ref()
+const loading = ref(false)
 
 const login = handleSubmit(async values => {
   error.value = null
   loading.value = true
-  let res = await auth.login(values.email, values.password)
+  const res = await auth.login(values.email, values.password)
   if (res.ok) await navigateTo(redirectTo, { replace: true })
   else error.value = res
   loading.value = false

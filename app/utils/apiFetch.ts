@@ -5,7 +5,7 @@ export const useApiFetchRaw = () => $fetch.create({
   retryStatusCodes: [408, 409, 425, 500, 502, 503, 504, 401],
 
   onRequest({ options }) {
-    let auth = useAuth()
+    const auth = useAuth()
     if (auth.accessToken.value) {
       if (!(options.headers instanceof Headers)) {
         options.headers = new Headers(options.headers)
@@ -15,7 +15,7 @@ export const useApiFetchRaw = () => $fetch.create({
   },
   async onResponseError({ response }) {
     if (response.status === 401 && response._data?.tokenNeedRefresh) {
-      let auth = useAuth()
+      const auth = useAuth()
       await auth.refresh()
       if (!auth.accessToken.value) {
 			  navigateTo({ path: '/auth/login', query: { redirect: encodeURIComponent(useRoute().path) } })

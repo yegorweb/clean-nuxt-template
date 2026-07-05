@@ -24,19 +24,19 @@ const { handleSubmit } = useForm({
   },
 })
 
-let password = useField<string>('password')
-let user_id = useRoute().query.user_id as string
-let token = useRoute().query.token as string
+const password = useField<string>('password')
+const user_id = useRoute().query.user_id as string
+const token = useRoute().query.token as string
 
-let pressed = ref(true)
-let showPassword = ref(false)
-let error = ref()
-let loading = ref(false)
+const pressed = ref(true)
+const showPassword = ref(false)
+const error = ref()
+const loading = ref(false)
 
 const submit = handleSubmit(async values => {
   error.value = null
   loading.value = true
-  let res = await auth.resetPassword(values.password, token, user_id)
+  const res = await auth.resetPassword(values.password, token, user_id)
   if (res.ok) await navigateTo('/auth/login', { replace: true })
   else error.value = res
   loading.value = false

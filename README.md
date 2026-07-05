@@ -64,7 +64,7 @@ definePageMeta({
 ```ts
 // path: ~/composables/useUser.ts
 export const useUser = () => {
-  let $apiFetch = useApiFetchRaw()
+  const $apiFetch = useApiFetchRaw()
 
   async function getMyName(): Promise<StoreResponse<string>> {
     let response: StoreResponse<string> = { ok: false }

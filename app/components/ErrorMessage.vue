@@ -1,6 +1,6 @@
 <script setup lang="ts">
-let model = defineModel<string | Extract<StoreResponse<any>, { ok: false }>>()
-let message = model.value ? typeof model.value === 'string' ? model.value : generateErrorMessage(model.value) : 'Ошибка'
+const model = defineModel<string | Extract<StoreResponse<any>, { ok: false }>>()
+const message = model.value ? typeof model.value === 'string' ? model.value : generateErrorMessage(model.value) : 'Ошибка'
 </script>
 
 <template>

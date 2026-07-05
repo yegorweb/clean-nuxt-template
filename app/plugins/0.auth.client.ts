@@ -6,10 +6,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const config = useRuntimeConfig()
 
-	let user = useState<User | null | undefined>('user')
-	let loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
-	let accessToken = useState<string | null | undefined>('accessToken')
-	let refreshed = useState<true | undefined>('refreshed')
+	const user = useState<User | null | undefined>('user')
+	const loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
+	const accessToken = useState<string | null | undefined>('accessToken')
+	const refreshed = useState<true | undefined>('refreshed')
 
 	async function refresh(): Promise<StoreResponse<null>> {
 		let response = { ok: false } as StoreResponse<null>
@@ -108,7 +108,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	}
 
 	async function sendResetLink(email: string): Promise<StoreResponse<null>> {
-		let $apiFetch = useApiFetchRaw()
+		const $apiFetch = useApiFetchRaw()
 		let response: StoreResponse<null> = { ok: false }
 		
 		await $apiFetch<string>('/auth/send-reset-password-link', { 
@@ -124,7 +124,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	}
 
 	async function resetPassword(password: string, token: string, user_id: string): Promise<StoreResponse<null>> {
-		let $apiFetch = useApiFetchRaw()
+		const $apiFetch = useApiFetchRaw()
 		let response: StoreResponse<null> = { ok: false }
 		
 		await $apiFetch<string>('/auth/reset-password', { 

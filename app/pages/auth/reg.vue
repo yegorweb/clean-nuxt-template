@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { mdiEye, mdiEyeOff } from '@mdi/js'
 
-let auth = useAuth()
+const auth = useAuth()
 
 useSeoMeta({
   title: 'Регистрация',
   ogTitle: 'Регистрация',
 })
 
-let route = useRoute()
-let redirectTo = Array.isArray(route.query.redirect) ? 
+const route = useRoute()
+const redirectTo = Array.isArray(route.query.redirect) ? 
   (route.query.redirect[0] ? decodeURIComponent(route.query.redirect[0]) : '/') : 
   (route.query.redirect ? decodeURIComponent(route.query.redirect) : '/')
 
@@ -47,21 +47,21 @@ const { meta, handleSubmit, handleReset, validate } = useForm<{
   },
 })
 
-let fullname = useField<string>('fullname')
-let email = useField<string>('email')
-let password = useField<string>('password')
+const fullname = useField<string>('fullname')
+const email = useField<string>('email')
+const password = useField<string>('password')
 
-let show_password = ref(false)
-let pressed = ref(false)
-let error = ref()
-let loading = ref(false)
+const show_password = ref(false)
+const pressed = ref(false)
+const error = ref()
+const loading = ref(false)
 
 const submit = handleSubmit(async values => {
   error.value = null
   loading.value = true
-  let regRes = await auth.registerUser(values)
+  const regRes = await auth.registerUser(values)
   if (regRes.ok) {
-    let loginRes = await auth.login(values.email, values.password)
+    const loginRes = await auth.login(values.email, values.password)
     if (loginRes.ok) await navigateTo(redirectTo, { replace: true })
     else error.value = loginRes
   } else error.value = regRes

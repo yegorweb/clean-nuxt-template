@@ -16,19 +16,19 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 		return {}
 	}
 
-	let config = useRuntimeConfig()
-	let event = useRequestEvent()
+	const config = useRuntimeConfig()
+	const event = useRequestEvent()
 	
-	let user = useState<User | null | undefined>('user')
-	let loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
-	let accessToken = useState<string | null| undefined>('accessToken')
-  let tokenCookie = useCookie('refreshToken')
-	let refreshed = useState<true | undefined>('refreshed')
+	const user = useState<User | null | undefined>('user')
+	const loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
+	const accessToken = useState<string | null| undefined>('accessToken')
+  const tokenCookie = useCookie('refreshToken')
+	const refreshed = useState<true | undefined>('refreshed')
 
 	async function refresh() {
 		try {
       if (tokenCookie.value) {
-        let res_data = await fetchWithCookie<{
+        const res_data = await fetchWithCookie<{
           user: User, 
           accessToken: string
         }>(event!, config.public.apiBase + '/auth/refresh')

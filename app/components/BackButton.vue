@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { mdiArrowLeft } from "@mdi/js";
-
-let router = useRouter()
 </script>
 
 <template>
   <div style="display: flex;" class="pb-2">
     <div 
-      @click="router.back()" 
+      @click="$router.back()" 
       class="d-flex pt-1 pr-4 pb-1 cursor-pointer flex-row flex-nowrap align-center justify-start back"
     >
       <v-icon :icon="mdiArrowLeft" />

@@ -21,17 +21,17 @@ const { handleSubmit } = useForm({
   },
 })
 
-let email = useField<string>('email')
+const email = useField<string>('email')
 
-let pressed = ref(false)
-let error = ref()
-let loading = ref(false)
-let success = ref(false)
+const pressed = ref(false)
+const error = ref()
+const loading = ref(false)
+const success = ref(false)
 
 const submit = handleSubmit(async values => {
   error.value = null
   loading.value = true
-  let res = await auth.sendResetLink(values.email)
+  const res = await auth.sendResetLink(values.email)
   if (res.ok) success.value = true
   else error.value = res
   loading.value = false
