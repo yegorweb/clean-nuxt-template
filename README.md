@@ -34,6 +34,10 @@ Auth store доступен с composable `useAuth`
 ```vue
 <script setup lang="ts">
 const auth = useAuth()
+
+// На страницах с защитой
+// При { required: true } user будет иметь NonNullable тип User, acccessToken будет иметь NonNullable тип string
+const auth = useAuth({ required: true })
 </script>
 ```
 
@@ -54,6 +58,8 @@ const data = await $apiFetch('/user/get-all')
 definePageMeta({
   auth: true
 })
+
+const auth = useAuth({ required: true })
 </script>
 ```
 
