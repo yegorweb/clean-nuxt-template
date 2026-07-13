@@ -108,10 +108,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	}
 
 	async function sendResetLink(email: string): Promise<StoreResponse<null>> {
-		const $apiFetch = useApiFetchRaw()
 		let response: StoreResponse<null> = { ok: false }
 		
-		await $apiFetch<string>('/auth/send-reset-password-link', { 
+		await $fetch('/auth/send-reset-password-link', { 
 			method: 'POST',
 			body: { email },
 		}).then(() => {
@@ -124,10 +123,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	}
 
 	async function resetPassword(password: string, token: string, user_id: string): Promise<StoreResponse<null>> {
-		const $apiFetch = useApiFetchRaw()
 		let response: StoreResponse<null> = { ok: false }
 		
-		await $apiFetch<string>('/auth/reset-password', { 
+		await $fetch('/auth/reset-password', { 
 			method: 'POST',
 			body: {
 				password,
