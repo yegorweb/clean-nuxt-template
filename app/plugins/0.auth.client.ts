@@ -81,7 +81,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 			credentials: 'include',
 			method: 'POST',
 			body: form
-		}).then(data => {
+		}).then(() => {
 			response = { ok: true }
 		}).catch((err: FetchError) => {
       response = { ok: false, status: err.status, message: err.response?._data?.message }
@@ -97,7 +97,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 			baseURL: config.public.apiBase, 
 			credentials: 'include',
 			method: 'POST'
-		}).then(async data => {
+		}).then(async () => {
 			await navigateTo('/')
 			clearNuxtState(['user', 'accessToken', 'refreshed'])
 		}).catch((err: FetchError) => {
