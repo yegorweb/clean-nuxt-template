@@ -59,5 +59,11 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 		{ global: true }
 	)
 
-	return {}
+	return {
+		provide: {
+			auth: {
+				refresh,
+			},
+		},
+	}
 })
