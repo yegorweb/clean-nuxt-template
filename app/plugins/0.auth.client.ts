@@ -111,6 +111,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 		let response: StoreResponse<null> = { ok: false }
 		
 		await $fetch('/auth/send-reset-password-link', { 
+			baseURL: config.public.apiBase, 
 			method: 'POST',
 			body: { email },
 		}).then(() => {
@@ -126,6 +127,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 		let response: StoreResponse<null> = { ok: false }
 		
 		await $fetch('/auth/reset-password', { 
+			baseURL: config.public.apiBase, 
 			method: 'POST',
 			body: {
 				password,
