@@ -34,6 +34,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         }>(event!, config.public.apiBase + '/auth/refresh')
         user.value = res_data?.user
         accessToken.value = res_data?.accessToken
+			  refreshed.value = true
       }
 			return { ok: true }
 		} catch (err) {
@@ -45,7 +46,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 		}
 	}
 	await refresh()
-  refreshed.value = true
 
 	/**
 		* Add global route middleware to protect pages using:
