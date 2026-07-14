@@ -25,7 +25,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const tokenCookie = useCookie('refreshToken')
 	const refreshed = useState<true | undefined>('refreshed')
 
-	async function refresh() {
+	async function refresh(): Promise<StoreResponse<null>> {
 		try {
       if (tokenCookie.value) {
         const res_data = await fetchWithCookie<{
@@ -35,7 +35,14 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         user.value = res_data?.user
         accessToken.value = res_data?.accessToken
       }
-		} catch {}
+			return { ok: true }
+		} catch (err) {
+			if (err instanceof FetchError) {
+				return { ok: false, status: err.status, message: err.response?._data?.message }
+			} else {
+				return { ok: false }
+			}
+		}
 	}
 	await refresh()
   refreshed.value = true
