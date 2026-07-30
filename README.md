@@ -41,17 +41,6 @@ const auth = useAuth({ required: true })
 </script>
 ```
 
-### Api fetch
-В компонентах можно исользовать кастомный `useFetch` — `useApiFetch`
-```ts
-const { data, resfresh } = await useApiFetch('/user/get-all')
-```
-В остальных случаях (например в сторах) надо использовать кастомный `$fetch` который отдается функцией `useApiFetchRaw`
-```ts
-const $apiFetch = useApiFetchRaw()
-const data = await $apiFetch('/user/get-all')
-```
-
 ### Страница только для авторизированных
 ```vue
 <script setup lang="ts">
@@ -63,45 +52,80 @@ const auth = useAuth({ required: true })
 </script>
 ```
 
-### Ответ со store
+### API fetch
+
+#### `useApiFetch` (from composables/useApiFetch.ts)
+`useApiFetch` — это кастомный `useFetch`, который используется точно так же как `useFetch`
+```ts
+const { data, resfresh } = await useApiFetch('/user/get-all')
+```
+
+#### `$apiFetch` (from plugins/1.api.ts)
+`$apiFetch` — это кастомный `$fetch`, находящийся в nuxtApp
+```ts
+const { $apiFetch } = useNuxtApp()
+const res = await $apiFetch.raw('/user/get-all')
+```
+
+### Safety API fetch
+
 Для обработки исключений рекомендую возвращать с функций значение типа `MaybePromise<StoreResponse<T>>`. <br>
-`StoreResponse<T>` — это тип ответа который либо `{ ok: true, data: T }` либо `{ ok: false, message?: string, status?: number }` <br>
-Рекомендуемый вид store:
+`StoreResponse<T>` — это тип ответа который либо `{ ok: true, data: T }` либо `{ ok: false, message?: string, status?: number }`
+
+#### `$apiFetchSafe` (from plugins/1.api.ts)
+`$apiFetchSafe` — это асинхронная функция, вызывающая `$apiFetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>`
+```ts
+const { $apiFetchSafe } = useNuxtApp()
+const res = await $apiFetchSafe('/user/get-all')
+// { ok: true, data: [...] } или { ok: false, ... }
+```
+
+#### `$fetchSafe` (from plugins/1.api.ts)
+`$fetchSafe` — это асинхронная функция, вызывающая `$fetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>`
+```ts
+const { $fetchSafe } = useNuxtApp()
+const res = await $fetchSafe('/user/get-all')
+// { ok: true, data: [...] } или { ok: false, ... }
+```
+
+#### `$apiFetchSafeWithCookies` (from plugins/1.api.ts)
+`$apiFetchSafeWithCookies` — это асинхронная функция, вызывающая `$apiFetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>` и прокидывает cookies на клиент если вызывается с сервера
+```ts
+const { $apiFetchSafeWithCookies } = useNuxtApp()
+const event = useRequestEvent()
+const { data, refresh } = await useAsyncData(
+  () => $apiFetchSafeWithCookies(event, '/cookie-route')
+)
+// { ok: true, data: [...] } или { ok: false, ... }
+```
+
+#### `$fetchSafeWithCookies` (from plugins/1.api.ts)
+`$fetchSafeWithCookies` — это асинхронная функция, вызывающая `$fetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>` и прокидывает cookies на клиент если вызывается с сервера
+```ts
+const { $fetchSafeWithCookies } = useNuxtApp()
+const event = useRequestEvent()
+const { data, refresh } = await useAsyncData(
+  () => $fetchSafeWithCookies(event, '/cookie-route')
+)
+// { ok: true, data: [...] } или { ok: false, ... }
+```
+
+### Рекомендуемый вид store
 ```ts
 // path: ~/composables/useUser.ts
 export const useUser = () => {
-  const $apiFetch = useApiFetchRaw()
+  const { $apiFetchSafe } = useNuxtApp()
 
-  async function getMyName(): Promise<StoreResponse<string>> {
-    let response: StoreResponse<string> = { ok: false }
-
-    await $apiFetch<string>('/user/my-name', { 
-      method: 'GET' 
-    }).then(data => {
-      response = { ok: true, data }
-    }).catch((err: FetchError) => {
-      response = { ok: false, status: err.status, message: err.response?._data?.message }
+  async function getMyName() {
+    return await $apiFetchSafe<string>('/user/my-name', { 
+      method: 'GET',
     })
-
-    return response
   }
 
   return {
     getMyName,
   }
 }
-```
-
-### Fetch with cookies from SSR and pass they to the client
-Для этого есть util `useApiFetchWithCookies` — с API и util `useFetchWithCookies` — с любого ресурса. Оба принимают `$fetch` параметры и доступны из любого места.
-```vue
-<script setup lang="ts">
-const event = useRequestEvent()
-
-const { data:result, refresh } = await useAsyncData(
-  () => useApiFetchWithCookies(event!, '/cookie-route')
-)
-</script>
 ```
 
 ## License
