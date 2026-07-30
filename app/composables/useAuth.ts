@@ -5,7 +5,7 @@ type UseAuthOptions<T extends boolean = false> = {
 export const useAuth = <T extends boolean = false>(
   options?: UseAuthOptions<T>,
 ) => {
-  const $auth = useNuxtApp().$auth
+  const { $auth } = useNuxtApp()
   const user = useState<T extends true ? User : User | null | undefined>('user')
   const loggedIn = computed<boolean>(() => user.value ? Object.keys(user.value).length > 0 : false)
 	const accessToken = useState<T extends true ? string : string | null | undefined>('accessToken')

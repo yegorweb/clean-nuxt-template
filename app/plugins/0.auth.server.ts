@@ -1,8 +1,20 @@
 import { appendResponseHeader, H3Event } from 'h3'
+import type { NitroFetchOptions, NitroFetchRequest } from 'nitropack'
 
-async function fetchWithCookie<T>(event: H3Event, url: string) {
+async function fetchWithCookies<
+	DefaultT = unknown,
+	DefaultR extends NitroFetchRequest = NitroFetchRequest,
+	T = DefaultT,
+	R extends NitroFetchRequest = DefaultR,
+	O extends NitroFetchOptions<R> = NitroFetchOptions<R>
+>(event: H3Event, url: R, options?: O) {
 	const headers = useRequestHeaders(['cookie'])
-  const res = await $fetch.raw<T>(url, { method: 'POST', credentials: 'include', headers })
+  const res = await $fetch.raw<T>(url, { 
+		...options,
+		headers: {...options?.headers, ...headers},
+		credentials: 'include', 
+		ignoreResponseError: true,
+	})
   const cookies = res.headers.getSetCookie()
   for (const cookie of cookies) {
     appendResponseHeader(event, 'set-cookie', cookie)
@@ -28,21 +40,20 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	async function refresh(): Promise<StoreResponse<null>> {
 		try {
       if (tokenCookie.value) {
-        const res_data = await fetchWithCookie<{
+        const res_data = await fetchWithCookies<{
           user: User, 
-          accessToken: string
-        }>(event!, config.public.apiBase + '/auth/refresh')
+          accessToken: string,
+        }>(event!, '/auth/refresh', {
+					baseURL: config.public.apiBase,
+					method: 'POST',
+				})
         user.value = res_data?.user
         accessToken.value = res_data?.accessToken
 			  refreshed.value = true
       }
-			return { ok: true }
-		} catch (err) {
-			if (err instanceof FetchError) {
-				return { ok: false, status: err.status, message: err.response?._data?.message }
-			} else {
-				return { ok: false }
-			}
+			return { ok: true, data: null }
+		} catch {
+			return { ok: false }
 		}
 	}
 	await refresh()
