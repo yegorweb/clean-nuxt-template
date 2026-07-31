@@ -89,7 +89,7 @@ const res = await $fetchSafe('/user/get-all')
 ```
 
 #### `$apiFetchSafeWithCookies` (from plugins/1.api.ts)
-`$apiFetchSafeWithCookies` — это асинхронная функция, вызывающая `$apiFetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>` и прокидывает cookies на клиент если вызывается с сервера
+`$apiFetchSafeWithCookies` — это асинхронная функция, вызывающая `$apiFetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>` и прокидывает cookies на клиент если вызывается с сервера. Используйте его там, где `useRequestEvent` точно вернёт `H3Event` на сервере. Если его нет, функция ничего не прокинет. 
 ```ts
 const { $apiFetchSafeWithCookies } = useNuxtApp()
 const event = useRequestEvent()
@@ -100,7 +100,7 @@ const { data, refresh } = await useAsyncData(
 ```
 
 #### `$fetchSafeWithCookies` (from plugins/1.api.ts)
-`$fetchSafeWithCookies` — это асинхронная функция, вызывающая `$fetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>` и прокидывает cookies на клиент если вызывается с сервера
+`$fetchSafeWithCookies` — это асинхронная функция, вызывающая `$fetch` и находящийся в nuxtApp, которая возвращает `Promise<StoreResponse<T>>` и прокидывает cookies на клиент если вызывается с сервера. Используйте его там, где `useRequestEvent` точно вернёт `H3Event` на сервере. Если его нет, функция ничего не прокинет.
 ```ts
 const { $fetchSafeWithCookies } = useNuxtApp()
 const event = useRequestEvent()
