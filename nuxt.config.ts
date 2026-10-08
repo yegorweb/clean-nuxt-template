@@ -39,6 +39,9 @@ export default defineNuxtConfig({
 
   vuetify: {
     vuetifyOptions: './vuetify.config.ts',
+    moduleOptions: {
+      prefixComposables: true,
+    },
   },
 
   svgo: {
