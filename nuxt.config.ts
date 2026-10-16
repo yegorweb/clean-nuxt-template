@@ -52,6 +52,18 @@ export default defineNuxtConfig({
     port: Number(import.meta.env.NUXT_DEV_PORT || 3000)
   },
 
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@mdi/js',
+        '@unhead/schema-org/vue',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'vee-validate',
+      ]
+    },
+  },
+
   imports: {
     imports: [
       {
